@@ -1,40 +1,41 @@
 ﻿module Thuja.Core
 
+open System
 open System.Collections
 
 open Tutu
 
-type Tree<'a> =
-  | Tree of 'a * Tree<'a> list
-
 type Region = 
-  { X1: int
-    Y1: int
-    X2: int 
-    Y2: int }
+  { X1: int; Y1: int
+    X2: int; Y2: int }
 
 type IRenderable =
-  abstract Render: Region -> ICommand list // todo: make general commands instead of Tutu
+  abstract Render: Region -> ICommand list
 
 type IElement =
   inherit IRenderable
   inherit IStructuralEquatable
-  
-type Region with
-  member this.Width = this.X2 - this.X1
-  member this.Height = this.Y2 - this.Y1
-  member this.Inner =
-    { X1 = this.X1 + 1
-      Y1 = this.Y1 + 1
-      X2 = this.X2 - 1 
-      Y2 = this.Y2 - 1 }
-  static member create(x1, y1, x2, y2) : Region =
-    { X1 = x1
-      Y1 = y1
-      X2 = x2
-      Y2 = y2 }
-  static member create(width, height) : Region =
-    { X1 = 0
-      Y1 = 0
-      X2 = width
-      Y2 = height }
+
+type ViewTree =
+  | Tree of (IElement * Region) * ViewTree list
+
+type KeyInput =
+  | Char of char | FKey of int
+  | Up | Down | Left | Right 
+  | Enter | Backspace | Delete 
+  | Tab | BackTab
+
+[<Flags>]
+type KeyModifiers =
+  | Shift = 0b001 | Ctrl = 0b010 | Alt = 0b100
+
+type ApplicationEvent<'msg> =
+  | KeyboardInput of KeyInput * KeyModifiers
+  | UserMessage of 'msg
+
+type Cmd<'msg> = Async<'msg> list
+
+type View<'model> = 'model -> Region -> ViewTree
+type Update<'model, 'msg> = 'model -> ApplicationEvent<'msg> -> 'model * Cmd<'msg>
+
+type Program<'model, 'msg> = 'model -> View<'model> -> Update<'model, 'msg> -> unit

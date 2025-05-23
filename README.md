@@ -19,7 +19,7 @@ _See the [examples directory](sample/)._
 let selected = 0
 
 // view
-let view selected _ =
+let view selected =
   columns [ 40; 60 ] [
     panel [ 
       list [
@@ -29,17 +29,17 @@ let view selected _ =
       ] [selected]
     ]
     panel [
-      text "Use 'j' and 'k' keys to navigate through the list items, 'q' for exit."
+      text "Use '↑' and '↓' keys to navigate through the list items, 'Ctrl+C' for exit."
     ]
   ]
 
 // update
-let update event selected =
+let update selected event =
   let length = 2
   match event with
-  | KeyEvent "j" -> Math.Min(length, selected + 1), Cmd.none
-  | KeyEvent "k" -> Math.Max(0, selected - 1), Cmd.none
-  | KeyEvent "q" -> selected, Cmd.exit
+  | KeyboardInput (Down, _) -> Math.Min(length, selected + 1), Cmd.none
+  | KeyboardInput (Up, _) -> Math.Max(0, selected - 1), Cmd.none
+  | KeyboardInput (Char 'c', KeyModifiers.Ctrl) -> selected, Program.exit()
   | _ -> selected, Cmd.none
 
 // program
@@ -50,7 +50,7 @@ Program.run selected view update
 
 - implement not implemented parts (see `todo` in a code);
 - make comprehensive user input handling:
-    - keyboard input (different keys, key kinds, modifiers, etc);
+    - keyboard input (different keys, key kinds?, modifiers, etc);
     - mouse input?
 - decide if to use dispatch in view and self-sufficient reactive elements or process elements state through the model;
 - add different control elements:
@@ -58,11 +58,13 @@ Program.run selected view update
     - button;
     - implement panel borders style (see `todo`);
     - ...
-- add different layout options (exact sizing, padding/margin, etc);
+- add different layout options (exact sizing, padding/margin, etc)?;
 - handle terminal resizing;
 - add styles;
-- abstract core logic from Tutu and use it as backend;
+- add tests;
+- add debug options;
+- abstract core logic from Tutu and use it as backend?;
 - make nuget package;
 - write documentation;
-- consider using elmish as MVU framework;
+- consider using elmish as MVU framework?;
 - ...

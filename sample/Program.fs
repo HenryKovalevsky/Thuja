@@ -5,6 +5,7 @@ open CliWrap
 open CliWrap.Buffered
 
 open Thuja
+open Thuja.Core
 open Thuja.DSL
 
 // https://hpjansson.org/chafa/
@@ -43,7 +44,7 @@ let model =
     Index = 0 }
 
 // view
-let view (model : Menu) (dispatch : Msg -> unit) =
+let view (model : Menu) =
   columns [ 45; 55 ] [
     panel [ 
       list model.Items [model.Index]
@@ -63,21 +64,24 @@ let isAsc items =
     |> Seq.forall (fun (a, b) -> a <= b)
 
 let handleKey (model : Menu) = function
-  | "q" -> model, Cmd.exit
-  | "k" -> model.Previous(), Cmd.none
-  | "j" -> model.Next(), Cmd.none
-  | "s" -> model, Cmd.ofMsg (if isAsc model.Items then Sort Desc else Sort Asc) // user events example
-  | "e" -> model, Cmd.ofFunc (fun _ -> failwith "aaaa! someone pressed e") // error example
+  | Char 'q', _
+  | Char 'c', KeyModifiers.Ctrl -> model, Program.exit()
+
+  | Up, _ | Char 'k', _ -> model.Previous(), Cmd.none
+  | Down, _ | Char 'j', _ -> model.Next(), Cmd.none
+
+  | Char 's', _ -> model, Cmd.ofMsg (if isAsc model.Items then Sort Desc else Sort Asc) // user events example
+  | Char 'e', _ -> model, Cmd.ofAsync (async { return! failwith "aaaa! someone pressed e" }) // error example
+  
   | _ -> model, Cmd.none
 
-let handleMsg (model : Menu) = function
+let handleMsg model = function
   | Sort Asc -> { model with Items = List.sort model.Items }, Cmd.none
   | Sort Desc -> { model with Items = List.sortDescending model.Items }, Cmd.none
 
-let update event (model : Menu) =
-  match event with
-  | KeyEvent code -> handleKey model code
-  | UserEvent msg -> handleMsg model msg
+let update model = function
+  | KeyboardInput (key, modifiers) -> handleKey model (key, modifiers)
+  | UserMessage msg -> handleMsg model msg
 
 // program
 Program.run model view update

@@ -1,19 +1,20 @@
-module Thuja.Elements
+module internal Thuja.Elements
 
 open System
+open System.Collections
 
 open Thuja.Core
+open Thuja.Helpers
 
 open Tutu
 open Tutu.Commands
 open Tutu.Style.Extensions
-open System.Collections
 
 type internal String with
-  member this.TrimEndEllipsis (length : int)=
+  member this.TruncateWithEllipsis (length : int)=
     if this.Length > length
-    then this[..length - 2] + "⋯"
-    else this.PadRight length
+    then this[..length - 1] + "⋯"
+    else this.PadRight (length + 1)
 
 type Panel =
   { Border: string } // todo: make border style selection
@@ -51,7 +52,7 @@ type List =
       let items =
         this.Items
         |> Seq.mapi ^fun index item ->
-            index, item.TrimEndEllipsis region.Width
+            index, item.TruncateWithEllipsis region.Width
 
       [ for index, item in items do
           yield Cursor.MoveTo (region.X1, region.Y1 + index)
@@ -67,7 +68,7 @@ type Text =
       let lines = 
         this.Content.Split(Environment.NewLine)
         |> Seq.mapi ^fun index line ->
-            index, line.TrimEndEllipsis region.Width
+            index, line.TruncateWithEllipsis region.Width
 
       if Seq.length lines > region.Height
       then raise <| NotImplementedException() // todo: design implementation
@@ -81,10 +82,7 @@ type Raw<'model when 'model : equality> =
     Process: 'model -> int * int -> string }
   interface IElement with
     member this.Render(region : Region): ICommand list = 
-      [ for y in region.Y1..region.Y2 do
-          yield Cursor.MoveTo (region.X1, y)
-          yield Style.Print <| "".PadRight(region.Width, ' ') // clear region
-        yield Cursor.MoveTo (region.X1, region.Y1)
+      [ yield Cursor.MoveTo (region.X1, region.Y1)
         yield Style.Print <| this.Process this.Model (region.Width, region.Height) ]
     member this.Equals(obj : obj, comparer : IEqualityComparer): bool = 
       match obj with
@@ -93,7 +91,7 @@ type Raw<'model when 'model : equality> =
     member this.GetHashCode(_): int = 
       hash this.Model
 
-type Empty() =
+type Empty private () =
   interface IElement with
     member _.Render(region : Region): ICommand list = 
       []
@@ -101,3 +99,5 @@ type Empty() =
       obj :? Empty
     member this.GetHashCode(_): int = 
       hash this
+  end
+    static member singleton = Empty()

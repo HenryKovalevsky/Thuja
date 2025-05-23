@@ -1,6 +1,7 @@
-module Thuja.Layout 
+module internal Thuja.Layout 
 
 open Thuja.Core
+open Thuja.Helpers
 
 let columns (ratios: int list) (region : Region) : Region list =
   let total = Seq.sum ratios
