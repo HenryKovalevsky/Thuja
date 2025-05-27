@@ -6,8 +6,6 @@ Thuja (_pronounce:_ /ˈθuː.jə/) is a minimalistic [F#](https://fsharp.org) li
 
 ## Prerequisites
 
-Written in [F#](https://fsharp.org).
-
 - [.NET SDK](https://dotnet.microsoft.com/) to work with F# files and dependencies.
 
 ## Usage
@@ -34,16 +32,19 @@ let view selected =
   ]
 
 // update
-let update selected event =
+let update selected event  =
   let length = 2
   match event with
-  | KeyboardInput (Down, _) -> Math.Min(length, selected + 1), Cmd.none
-  | KeyboardInput (Up, _) -> Math.Max(0, selected - 1), Cmd.none
-  | KeyboardInput (Char 'c', KeyModifiers.Ctrl) -> selected, Program.exit()
+  | Char 'c', KeyModifiers.Ctrl -> selected, Program.exit()
+  | Down, _ -> Math.Min(length, selected + 1), Cmd.none
+  | Up, _ -> Math.Max(0, selected - 1), Cmd.none
   | _ -> selected, Cmd.none
 
 // program
-Program.run selected view update
+Program.make selected view update
+|> Program.withKeyBindings Cmd.ofMsg
+|> Program.withBackend TutuBackend.beginSession
+|> Program.run
 ```
 
 ## Todo
@@ -56,14 +57,13 @@ Program.run selected view update
 - add different control elements:
     - text input;
     - button;
-    - implement panel borders style (see `todo`);
+    - implement panel borders style (see `todo` in a code);
     - ...
 - add different layout options (exact sizing, padding/margin, etc)?;
 - handle terminal resizing;
 - add styles;
 - add tests;
 - add debug options;
-- abstract core logic from Tutu and use it as backend?;
 - make nuget package;
 - write documentation;
 - consider using elmish as MVU framework?;
