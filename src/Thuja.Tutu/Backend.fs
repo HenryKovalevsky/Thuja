@@ -1,4 +1,4 @@
-module Thuja.Backend.Tutu
+module Thuja.Tutu
 
 open Thuja
 open Thuja.Backend

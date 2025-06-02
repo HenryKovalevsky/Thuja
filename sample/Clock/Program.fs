@@ -2,7 +2,7 @@
 open System.Timers
 
 open Thuja
-open Thuja.Backend.Tutu
+open Thuja.Tutu
 open Thuja.Elements
 
 // model
@@ -16,7 +16,7 @@ let model = { Time = DateTime.Now }
 
 // view
 let view (model : Model) =
-  center (10, 3) [ 
+  region [ Width 10; Height 3; Align Center ] [ 
     panel [ 
       text (model.Time.ToString "HH:mm:ss") 
     ]

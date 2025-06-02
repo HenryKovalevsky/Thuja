@@ -10,6 +10,7 @@
     <Compile Include="Layout.fs" />
     <Compile Include="Elements\Helpers.fs" />
     <Compile Include="Elements\Empty.fs" />
+    <Compile Include="Elements\Region.fs" />
     <Compile Include="Elements\Panel.fs" />
     <Compile Include="Elements\List.fs" />
     <Compile Include="Elements\Text.fs" />

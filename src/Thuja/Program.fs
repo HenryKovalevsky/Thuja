@@ -34,19 +34,7 @@ module Program =
       Model = model
       View = view
       Update = update
-      KeyBindings = function
-        | Char 'c', KeyModifiers.Ctrl -> exit() 
-        | _ -> Cmd.none
-      Subscriptions = [] }
-
-  let makeWithKeysProcessing (model : 'model) (view : 'model -> Region -> ViewTree) (update : 'model -> KeyInput * KeyModifiers -> 'model * Cmd<KeyInput * KeyModifiers>) =
-    { Backend = fun _ -> failwith "Backend is not provided."
-      Model = model
-      View = view
-      Update = update
-      KeyBindings = function
-        | Char 'c', KeyModifiers.Ctrl -> exit() 
-        | msg -> Cmd.ofMsg msg
+      KeyBindings = function | _ -> exit() 
       Subscriptions = [] }
 
   let withBackend (backend : unit -> IBackend) (program : Program<'model, 'msg>) =

@@ -1,7 +1,7 @@
 ﻿open System
 
 open Thuja
-open Thuja.Backend.Tutu
+open Thuja.Tutu
 open Thuja.Elements
 open Thuja.Backend
 
