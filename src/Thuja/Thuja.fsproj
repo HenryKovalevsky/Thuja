@@ -1,8 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Thuja</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Henry Kovalevsky</Authors>
+    <Description>Thuja is a minimalistic F# library to build terminal user interfaces.</Description>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryUrl>https://github.com/HenryKovalevsky/Thuja</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="/"/>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="Prelude.fs" />
     <Compile Include="Backend.fs" />
@@ -18,4 +36,5 @@
     <Compile Include="Elements\Layout.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
+
 </Project>

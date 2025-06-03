@@ -1,8 +1,12 @@
 # Thuja
 
-Thuja (_pronounce:_ /ˈθuː.jə/) is a minimalistic [F#](https://fsharp.org) library to build terminal user interfaces. It's inspired by [Elm](https://elm-lang.org/) and based on [Tutu](https://github.com/lillo42/tutu/) as a cross-term backend implementation.
+[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.1)
 
-> NB: Really raw version with a bunch of work to do.
+<p align="center">
+ <img width="200px" src="src/Thuja/icon.png" alt="icon"/>
+</p>
+
+Thuja (_pronounce:_ /ˈθuː.jə/) is a minimalistic [F#](https://fsharp.org) library to build terminal user interfaces. It's inspired by [Elm](https://elm-lang.org/) and based on [Tutu](https://github.com/lillo42/tutu/) as a cross-term backend implementation.
 
 ## Prerequisites
 
@@ -63,7 +67,6 @@ Program.make selected view update
 - add styles;
 - add tests;
 - add debug options;
-- make nuget package;
 - write documentation;
 - consider using elmish as MVU framework?;
 - ...
