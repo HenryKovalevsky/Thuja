@@ -9,7 +9,7 @@ open Tutu.Events
 open Tutu.Commands
 open Tutu.Terminal
 
-type TutuBackend private () =
+type TutuBackend() =
   do Terminal.beginSession()
 
   let input = new Event<KeyInput * Backend.KeyModifiers>()
@@ -20,18 +20,19 @@ type TutuBackend private () =
       | _ -> ()
   })
 
-  static member beginSession() : IBackend = new TutuBackend()
-
   interface IBackend with
     member _.TerminalSize : int * int = 
       SystemTerminal.Size.Width - 1, SystemTerminal.Size.Height - 1
 
     member _.Execute(commands : Command list) : unit = 
       commands
-      |> Seq.map (function
-          | MoveTo (x, y) -> Cursor.MoveTo(x, y)
-          | Print content -> Style.Print content
-          | PrintWith (style, content) -> Style.PrintStyledContent <| Mapper.map (style, content))
+      |> Seq.collect (function
+          | MoveTo (x, y) -> [ Cursor.MoveTo(x, y) ]
+          | Print content -> [ Style.Print content ]
+          | PrintWith (style, content) -> [ 
+              Style.PrintStyledContent <| Mapper.map (style, content)
+              Style.Reset
+            ])
       |> Terminal.execute
 
       Terminal.execute [ Cursor.Hide ]
@@ -40,3 +41,7 @@ type TutuBackend private () =
 
     member _.Dispose() : unit = 
       do Terminal.endSession()
+
+[<RequireQualifiedAccess>]
+module Program =
+  let withTutuBackend = Program.withBackend<TutuBackend, _, _>

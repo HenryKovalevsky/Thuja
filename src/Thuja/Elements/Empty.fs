@@ -1,7 +1,8 @@
 namespace Thuja.Elements
 
-open Thuja.Backend
 open Thuja.View
+open Thuja.Backend
+open Thuja.Elements.Helpers
 
 type internal Empty private () =
   interface IElement with
@@ -17,7 +18,7 @@ type internal Empty private () =
 [<AutoOpen>]
 module Empty =
   let empty (_ : Region) : ViewTree =
-    Tree (
-      (Empty.singleton, Region.empty),
+    ViewTree.create
+      Empty.singleton
+      Region.empty
       []
-    )

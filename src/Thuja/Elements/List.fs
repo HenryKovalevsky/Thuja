@@ -8,28 +8,33 @@ open Thuja.Elements.Helpers
 
 type internal List =
   { Items: string list 
-    Marked: int list }
+    Index: int }
   interface IElement with
     member this.Render(region : Region) : Command list = 
-      if Seq.length this.Items > region.Height
-      then raise <| NotImplementedException() // todo: design implementation
+      let page = this.Index / region.Height
 
       let items =
         this.Items
-        |> Seq.mapi ^fun index item ->
-            index, item.TruncateWithEllipsis region.Width
+        |> Seq.map ^fun item ->
+            item.TruncateWithEllipsis region.Width
+        |> Seq.skip (page * region.Height)
+        |> Seq.truncate region.Height
 
-      [ for index, item in items do
+      [ for index = 0 to region.Height - 1 do
           yield MoveTo (region.X1, region.Y1 + index)
-          yield 
-            if Seq.contains index this.Marked 
-            then PrintWith <| item.On DarkGrey
-            else Print <| item ]
+          yield
+            match Seq.tryItem index items with
+            | Some item ->
+                if this.Index = page * region.Height + index
+                then PrintWith <| item.On DarkGrey
+                else Print <| item 
+            | None ->
+                Print <| String.Empty.Truncate region.Width ] // clear 
 
 [<AutoOpen>]
 module List = 
-  let list items marked (region : Region) : ViewTree =
-    Tree (
-      ({ Items = items; Marked = marked }, region),
+  let list items index (region : Region) : ViewTree =
+    ViewTree.create 
+      { Items = items; Index = index }
+      region
       []
-    )

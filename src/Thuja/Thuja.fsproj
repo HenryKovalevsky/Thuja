@@ -7,7 +7,7 @@
     <Compile Include="Prelude.fs" />
     <Compile Include="Backend.fs" />
     <Compile Include="View.fs" />
-    <Compile Include="Layout.fs" />
+    <Compile Include="Styles.fs" />
     <Compile Include="Elements\Helpers.fs" />
     <Compile Include="Elements\Empty.fs" />
     <Compile Include="Elements\Region.fs" />

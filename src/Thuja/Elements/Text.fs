@@ -6,24 +6,41 @@ open Thuja.View
 open Thuja.Backend
 open Thuja.Elements.Helpers
 
+type TextProps =
+  | Color of Color
+  | Background of Color
+
 type internal Text =
-  { Content: string }
+  { Props: TextProps list
+    Content: string }
   interface IElement with
     member this.Render(region : Region): Command list = 
+      let color = 
+        this.Props 
+        |> Seq.choose ^function | Color color -> Some color | _ -> None
+        |> Seq.tryHead
+        |> Option.defaultValue Reset
+
+      let background = 
+        this.Props 
+        |> Seq.choose ^function | Background color -> Some color | _ -> None
+        |> Seq.tryHead
+        |> Option.defaultValue Reset
+        
       let lines = 
-        this.Content.Split(Environment.NewLine)
+        this.Content.Split Environment.NewLine
         |> Seq.mapi ^fun index line ->
             index, line.Truncate region.Width
         |> Seq.truncate region.Height
 
       [ for index, line in lines do
           yield MoveTo (region.X1, region.Y1 + index)
-          yield Print line ]
+          yield PrintWith <| line.Styled(color, background) ]
 
 [<AutoOpen>]
 module Text = 
-  let text content (region : Region) : ViewTree =
-    Tree (
-      ({ Content = content }, region),
+  let text props content (region : Region) : ViewTree =  
+    ViewTree.create
+      { Props = props; Content = content }
+      region
       []
-    )

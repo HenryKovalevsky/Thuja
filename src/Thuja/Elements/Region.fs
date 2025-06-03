@@ -1,8 +1,8 @@
 namespace Thuja.Elements
 
 open Thuja.View
+open Thuja.Elements.Helpers
 
-// todo: flags?
 type Align =
   | Top
   | Bottom
@@ -58,8 +58,9 @@ module Region =
     let x2, y2 = min x2 region.X2, min y2 region.Y2
 
     let region = Region.create(x1, y1, x2, y2)
-    
-    Tree (
-      (Empty.singleton, Region.empty), 
-      subs |> List.map (fun s -> s region)
-    )
+    let subs = subs |> List.map ^fun sub -> sub region
+
+    ViewTree.create 
+      Empty.singleton
+      Region.empty
+      subs

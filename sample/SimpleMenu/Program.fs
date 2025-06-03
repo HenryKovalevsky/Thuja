@@ -2,8 +2,8 @@
 
 open Thuja
 open Thuja.Tutu
-open Thuja.Elements
 open Thuja.Backend
+open Thuja.Elements
 
 // model
 let selected = 0
@@ -11,15 +11,15 @@ let selected = 0
 // view
 let view selected =
   columns [ 40; 60 ] [
-    panel [ 
+    panel [] [ 
       list [
         "The quick brown fox jumps over the lazy dog"
         "съешь же ещё этих мягких французских булок, да выпей чаю"
         "exploited by the real owners of this enterprise, for it is they who take advantage of the needs of the poor" 
-      ] [selected]
+      ] selected
     ]
-    panel [
-      text "Use '↑' and '↓' keys to navigate through the list items, 'Ctrl+C' for exit."
+    panel [] [
+      text [] "Use '↑' and '↓' keys to navigate through the list items, 'Ctrl+C' for exit."
     ]
   ]
 
@@ -35,5 +35,5 @@ let update selected event  =
 // program
 Program.make selected view update
 |> Program.withKeyBindings Cmd.ofMsg
-|> Program.withBackend TutuBackend.beginSession
+|> Program.withTutuBackend
 |> Program.run

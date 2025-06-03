@@ -1,5 +1,4 @@
-﻿open System
-open System.IO
+﻿open System.IO
 
 open CliWrap
 open CliWrap.Buffered
@@ -23,7 +22,7 @@ let chafa fileName (width, height) =
 
 // model
 type Model =
-  { Menu: Menu.Model } // external elements example
+  { Menu: Menu.Model } // custom elements example
 
 type Msg = 
   | MenuMsg of Menu.Msg
@@ -41,12 +40,12 @@ let model =
 // view
 let view (model : Model) =
   columns [ 45; 55 ] [
-    panel [ 
+    panel [] [ 
       Menu.view model.Menu
     ]
-    panel [
+    panel [] [
       rows [ 30; 70 ] [
-        panel [ text model.Menu.Selected ]
+        panel [] [ text [] model.Menu.Selected ]
         raw chafa model.Menu.Selected
       ]
     ]
@@ -82,5 +81,5 @@ let keyBindings = function
 // program
 Program.make model view update
 |> Program.withKeyBindings keyBindings
-|> Program.withBackend TutuBackend.beginSession
+|> Program.withTutuBackend
 |> Program.run

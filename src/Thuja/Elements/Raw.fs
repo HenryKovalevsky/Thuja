@@ -3,8 +3,9 @@ namespace Thuja.Elements
 open System
 open System.Collections
 
-open Thuja.Backend
 open Thuja.View
+open Thuja.Backend
+open Thuja.Elements.Helpers
 
 type internal Raw<'model when 'model : equality> =
   { Model: 'model
@@ -13,7 +14,7 @@ type internal Raw<'model when 'model : equality> =
     member this.Render(region : Region): Command list = 
       [ for y in region.Y1..region.Y2 do
           yield MoveTo (region.X1, y)
-          yield Print <| String.Empty.PadRight(region.Width, ' ') // clear
+          yield Print <| String.Empty.Truncate region.Width // clear
 
         yield MoveTo (region.X1, region.Y1)
         yield Print <| this.Process this.Model (region.Width, region.Height) ]
@@ -27,7 +28,7 @@ type internal Raw<'model when 'model : equality> =
 [<AutoOpen>]
 module Raw = 
   let raw proc (model : 'model) (region : Region) : ViewTree =
-    Tree (
-      ({ Model = model; Process = proc }, region),
+    ViewTree.create 
+      { Model = model; Process = proc }
+      region
       []
-    )

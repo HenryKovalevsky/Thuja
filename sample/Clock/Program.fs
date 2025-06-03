@@ -4,6 +4,7 @@ open System.Timers
 open Thuja
 open Thuja.Tutu
 open Thuja.Elements
+open Thuja.Styles
 
 // model
 type Model =
@@ -17,8 +18,8 @@ let model = { Time = DateTime.Now }
 // view
 let view (model : Model) =
   region [ Width 10; Height 3; Align Center ] [ 
-    panel [ 
-      text (model.Time.ToString "HH:mm:ss") 
+    panel [ BorderStyle Double; BorderColor Color.DarkGrey ] [ 
+      text [ Color Color.Yellow ] (model.Time.ToString "HH:mm:ss") 
     ]
   ]
 
@@ -37,5 +38,5 @@ let subscription dispatch =
 // program
 Program.make model view update
 |> Program.withSubscriptions [subscription]
-|> Program.withBackend TutuBackend.beginSession
+|> Program.withTutuBackend
 |> Program.run
