@@ -39,12 +39,12 @@ let model =
 
 // view
 let view (model : Model) =
-  columns [ 45; 55 ] [
+  columns [ Ratio 45; Ratio 55 ] [
     panel [] [ 
       Menu.view model.Menu
     ]
     panel [] [
-      rows [ 30; 70 ] [
+      rows [ Ratio 30; Ratio 70 ] [
         panel [] [ text [] model.Menu.Selected ]
         raw chafa model.Menu.Selected
       ]

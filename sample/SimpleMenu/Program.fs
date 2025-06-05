@@ -10,7 +10,7 @@ let selected = 0
 
 // view
 let view selected =
-  columns [ 40; 60 ] [
+  columns [ Ratio 40; Ratio 60 ] [
     panel [] [ 
       list [
         "The quick brown fox jumps over the lazy dog"

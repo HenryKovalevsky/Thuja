@@ -1,10 +1,8 @@
 ﻿module Thuja.View
 
-open System
 open System.Collections
 
 open Thuja.Backend
-
 
 type Region = 
   { X1: int; Y1: int
@@ -37,6 +35,9 @@ type Region with
       X2 = 0; Y2 = 0 }
 
 module ViewTree =
+  let create element region subs =
+    Tree ((element, region), subs)
+
   let rec toSeq (Tree (value, subtrees)) = seq {
     yield value
     for tree in subtrees do

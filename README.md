@@ -1,6 +1,6 @@
 # Thuja
 
-[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.1)
+[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.2)
 
 <p align="center">
  <img width="200px" src="src/Thuja/icon.png" alt="icon"/>
@@ -22,7 +22,7 @@ let selected = 0
 
 // view
 let view selected =
-  columns [ 40; 60 ] [
+  columns [ Ratio 40; Ratio 60 ] [
     panel [] [ 
       list [
         "The quick brown fox jumps over the lazy dog"
@@ -62,7 +62,6 @@ Program.make selected view update
     - text input;
     - button;
     - ...
-- add different layout options (exact sizing, padding/margin, etc)?;
 - handle terminal resizing;
 - add styles;
 - add tests;

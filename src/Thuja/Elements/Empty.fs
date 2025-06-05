@@ -2,7 +2,6 @@ namespace Thuja.Elements
 
 open Thuja.View
 open Thuja.Backend
-open Thuja.Elements.Helpers
 
 type internal Empty private () =
   interface IElement with

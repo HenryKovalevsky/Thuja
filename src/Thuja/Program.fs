@@ -1,10 +1,10 @@
 namespace Thuja
 
-open System
 open System.Threading
 
-open Thuja.Backend
 open Thuja.View
+open Thuja.Backend
+open Thuja.Elements
 
 type Cmd<'msg> = Async<'msg> list
 type Sub<'msg> = ('msg -> unit) -> unit
@@ -97,7 +97,7 @@ module Program =
         return! loop viewTree (update model msg)
       }
 
-      let empty = Tree ((Elements.Empty.singleton, Region.empty), [])
+      let empty = ViewTree.create Empty.singleton Region.empty []
       loop empty (model, Cmd.none)
 
     // handle exceptions

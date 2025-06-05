@@ -3,7 +3,6 @@ namespace Thuja.Elements
 open Thuja.View
 open Thuja.Styles
 open Thuja.Backend
-open Thuja.Elements.Helpers
 
 type PanelProps =
   | BorderStyle of BorderStyle
@@ -51,7 +50,7 @@ type internal Panel =
 [<AutoOpen>]
 module Panel =
   let panel props (subs : (Region -> ViewTree) list) (region : Region) : ViewTree =
-    let subs = subs |> List.map ^fun s -> s region.Inner
+    let subs = subs |> List.map ^fun sub -> sub region.Inner
 
     ViewTree.create
       { Props = props }

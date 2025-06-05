@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <PackageId>Thuja</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>Henry Kovalevsky</Authors>
     <Description>Thuja is a minimalistic F# library to build terminal user interfaces.</Description>
     <PackageIcon>icon.png</PackageIcon>
