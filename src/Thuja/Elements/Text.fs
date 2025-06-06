@@ -2,8 +2,9 @@ namespace Thuja.Elements
 
 open System
 
+open Thuja
 open Thuja.View
-open Thuja.Backend
+open Thuja.Styles
 open Thuja.Elements.Helpers
 
 type TextProps =

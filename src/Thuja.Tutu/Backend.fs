@@ -1,7 +1,6 @@
 module Thuja.Tutu
 
 open Thuja
-open Thuja.Backend
 open Thuja.Backend.Helpers
 open Thuja.Backend.Mappings
 
@@ -12,7 +11,7 @@ open Tutu.Terminal
 type TutuBackend() =
   do Terminal.beginSession()
 
-  let input = new Event<KeyInput * Backend.KeyModifiers>()
+  let input = new Event<KeyInput * Thuja.KeyModifiers>()
   do Async.Start(async {
     while true do
       match SystemEventReader.Instance.Read() with
@@ -34,10 +33,10 @@ type TutuBackend() =
               Style.Reset
             ])
       |> Terminal.execute
-
-      Terminal.execute [ Cursor.Hide ]
     
-    member _.OnInput : IEvent<KeyInput * Backend.KeyModifiers> = input.Publish
+      Terminal.execute [ Cursor.Hide ]
+
+    member _.OnInput : IEvent<KeyInput * Thuja.KeyModifiers> = input.Publish
 
     member _.Dispose() : unit = 
       do Terminal.endSession()

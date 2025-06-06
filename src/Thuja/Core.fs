@@ -1,48 +1,18 @@
-module Thuja.Backend
+namespace Thuja
 
 open System 
 
 // style
 type Color = 
   | Reset
-  | Black
-  | DarkGrey
-  | Red
-  | DarkRed
-  | Green
-  | DarkGreen
-  | Yellow
-  | DarkYellow
-  | Blue
-  | DarkBlue
-  | Magenta
-  | DarkMagenta
-  | Cyan
-  | DarkCyan
-  | White
-  | Grey
+  | Ansi of byte
+  | Rgb of byte * byte * byte
 
 type Style = 
   { Foreground: Color
     Background: Color }
 
-type String with
-  member this.With(color : Color) =
-    { Foreground =  color
-      Background = Reset },
-    this
-
-  member this.On(color : Color) =
-    { Foreground =  Reset
-      Background = color },
-    this
-
-  member this.Styled(foreground : Color, background : Color) =
-    { Foreground =  foreground
-      Background = background },
-    this
-
-// command
+// render
 type Command =
   | MoveTo of x: int * y: int
   | Print of content: string

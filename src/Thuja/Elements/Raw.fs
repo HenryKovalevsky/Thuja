@@ -3,8 +3,8 @@ namespace Thuja.Elements
 open System
 open System.Collections
 
+open Thuja
 open Thuja.View
-open Thuja.Backend
 open Thuja.Elements.Helpers
 
 type internal Raw<'model when 'model : equality> =

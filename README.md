@@ -1,6 +1,6 @@
 # Thuja
 
-[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.2)
+[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.3)
 
 <p align="center">
  <img width="200px" src="src/Thuja/icon.png" alt="icon"/>
@@ -22,7 +22,7 @@ let selected = 0
 
 // view
 let view selected =
-  columns [ Ratio 40; Ratio 60 ] [
+  columns [ Fraction 40; Fraction 60 ] [
     panel [] [ 
       list [
         "The quick brown fox jumps over the lazy dog"
@@ -53,17 +53,16 @@ Program.make selected view update
 
 ## Todo
 
-- implement not implemented parts (see `todo` in a code);
 - make comprehensive user input handling:
     - keyboard input (different keys, key kinds?, modifiers, etc);
     - mouse input?
 - decide if to use dispatch in view and self-sufficient reactive elements or process elements state through the model;
+- implement subscriptions mechanism;
 - add different control elements:
     - text input;
     - button;
     - ...
 - handle terminal resizing;
-- add styles;
 - add tests;
 - add debug options;
 - write documentation;

@@ -2,8 +2,9 @@ namespace Thuja.Elements
 
 open System
 
+open Thuja
 open Thuja.View
-open Thuja.Backend
+open Thuja.Styles
 open Thuja.Elements.Helpers
 
 type internal List =
@@ -26,7 +27,7 @@ type internal List =
             match Seq.tryItem index items with
             | Some item ->
                 if this.Index = page * region.Height + index
-                then PrintWith <| item.On DarkGrey
+                then PrintWith <| item.On Color.DarkGrey
                 else Print <| item 
             | None ->
                 Print <| String.Empty.Truncate region.Width ] // clear 

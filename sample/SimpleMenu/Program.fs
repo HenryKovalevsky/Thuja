@@ -2,7 +2,7 @@
 
 open Thuja
 open Thuja.Tutu
-open Thuja.Backend
+open Thuja.Styles
 open Thuja.Elements
 
 // model
@@ -10,7 +10,7 @@ let selected = 0
 
 // view
 let view selected =
-  columns [ Ratio 40; Ratio 60 ] [
+  columns [ Fraction 40; Fraction 60 ] [
     panel [] [ 
       list [
         "The quick brown fox jumps over the lazy dog"

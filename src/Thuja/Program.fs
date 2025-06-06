@@ -2,8 +2,8 @@ namespace Thuja
 
 open System.Threading
 
+open Thuja
 open Thuja.View
-open Thuja.Backend
 open Thuja.Elements
 
 type Cmd<'msg> = Async<'msg> list

@@ -13,7 +13,7 @@ let (|KeyCodeEvent|_|) (event : IEvent) =
   | :? Event.KeyEventEvent as event when event.Event.Kind = KeyEventKind.Press ->
   
       let key : KeyInput option = Mapper.map event.Event.Code
-      let modifiers : Backend.KeyModifiers option = Mapper.map event.Event.Modifiers
+      let modifiers : Thuja.KeyModifiers option = Mapper.map event.Event.Modifiers
 
       (key, modifiers)
       ||> Option.map2 (fun key modifiers -> KeyCodeEvent (key, modifiers)) 
@@ -24,7 +24,8 @@ module Terminal =
   let execute commands =
     commands
     |> Seq.toArray
-    |> System.Console.Out.Execute
+    |> System.Console.Out.Enqueue
+    |> _.Flush()
     |> ignore
 
   let beginSession () =

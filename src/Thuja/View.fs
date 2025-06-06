@@ -2,7 +2,7 @@
 
 open System.Collections
 
-open Thuja.Backend
+open Thuja
 
 type Region = 
   { X1: int; Y1: int

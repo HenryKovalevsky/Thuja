@@ -4,29 +4,29 @@ open Thuja.View
 open Thuja.Elements
 
 type LayoutProps = 
-  | Fixed of size: int 
-  | Ratio of value: int
+  | Absolute of size: int 
+  | Fraction of value: int
 
 [<AutoOpen>]
 module Layout = 
   let columns (props : LayoutProps list) (subs : (Region -> ViewTree) list) (region : Region) : ViewTree =
     // props
-    let ratios = 
+    let fractions = 
       props
-      |> Seq.choose ^function | Ratio value -> Some value | _ -> None
+      |> Seq.choose ^function | Fraction value -> Some value | _ -> None
     
     let fixedSize =
       props
-      |> Seq.choose ^function | Fixed size -> Some size | _ -> None
+      |> Seq.choose ^function | Absolute size -> Some size | _ -> None
       |> Seq.sum
 
     // calculations
-    let total = Seq.sum ratios
+    let total = Seq.sum fractions
     let width = region.Width - fixedSize
 
     let calculateSize = function
-      | Ratio ratio -> width * ratio/total
-      | Fixed size -> size
+      | Fraction fraction -> width * fraction/total
+      | Absolute size -> size
 
     let regions =
       props
@@ -49,22 +49,22 @@ module Layout =
       
   let rows (props : LayoutProps list) (subs : (Region -> ViewTree) list) (region : Region) : ViewTree =
     // props
-    let ratios = 
+    let fractions = 
       props
-      |> Seq.choose ^function | Ratio value -> Some value | _ -> None
+      |> Seq.choose ^function | Fraction value -> Some value | _ -> None
 
     let fixedSize =
       props
-      |> Seq.choose ^function | Fixed size -> Some size | _ -> None
+      |> Seq.choose ^function | Absolute size -> Some size | _ -> None
       |> Seq.sum
 
     // calculations
-    let total = Seq.sum ratios
+    let total = Seq.sum fractions
     let height = region.Height - fixedSize
 
     let calculateSize = function
-      | Ratio ratio -> height * ratio/total
-      | Fixed size -> size
+      | Fraction fraction -> height * fraction/total
+      | Absolute size -> size
 
     let regions =
       props

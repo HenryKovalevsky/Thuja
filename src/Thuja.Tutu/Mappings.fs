@@ -3,34 +3,19 @@ module internal Thuja.Backend.Mappings
 open System
 
 open Thuja
-open Thuja.Backend
 
 open Tutu.Events 
 open Tutu.Style
 open Tutu.Style.Types
 
 type Mapper =
-  static member map(color : Backend.Color) : Color = 
+  static member map(color : Thuja.Color) : Color = 
     match color with
     | Reset -> Color.Reset
-    | Black -> Color.Black
-    | DarkGrey -> Color.DarkGrey
-    | Red -> Color.Red
-    | DarkRed -> Color.DarkRed
-    | Green -> Color.Green
-    | DarkGreen -> Color.DarkGreen
-    | Yellow -> Color.Yellow
-    | DarkYellow -> Color.DarkYellow
-    | Blue -> Color.Blue
-    | DarkBlue -> Color.DarkBlue
-    | Magenta -> Color.Magenta
-    | DarkMagenta -> Color.DarkMagenta
-    | Cyan -> Color.Cyan
-    | DarkCyan -> Color.DarkCyan
-    | White -> Color.White
-    | Grey -> Color.Grey
+    | Ansi code -> Color.AnsiValue code
+    | Rgb (r, g, b) -> Color.Rgb(r, g, b)
 
-  static member map(style : Backend.Style, content : string) : StyledContent<string> =
+  static member map(style : Thuja.Style, content : string) : StyledContent<string> =
     StyledContent(ContentStyled.Default
         .With(Mapper.map style.Foreground)
         .On(Mapper.map style.Background), content)
@@ -50,9 +35,9 @@ type Mapper =
     | :? KeyCode.DeleteKeyCode ->       Delete |> Some 
     | _ -> None // todo: extend 
 
-  static member map(keyModifiers : KeyModifiers) : Backend.KeyModifiers option =
-    let all = Seq.reduce (|||) <| Enum.GetValues<Backend.KeyModifiers>() 
-    let keyModifiers = int keyModifiers |> enum<Backend.KeyModifiers>
+  static member map(keyModifiers : KeyModifiers) : Thuja.KeyModifiers option =
+    let all = Seq.reduce (|||) <| Enum.GetValues<Thuja.KeyModifiers>() 
+    let keyModifiers = int keyModifiers |> enum<Thuja.KeyModifiers>
 
     if all &&& keyModifiers = keyModifiers // is defined flag
     then Some keyModifiers else None

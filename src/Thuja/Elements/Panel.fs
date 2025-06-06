@@ -1,8 +1,8 @@
 namespace Thuja.Elements
 
+open Thuja
 open Thuja.View
 open Thuja.Styles
-open Thuja.Backend
 
 type PanelProps =
   | BorderStyle of BorderStyle
@@ -12,6 +12,7 @@ type internal Panel =
   { Props: PanelProps list }
   interface IElement with
     member this.Render (region : Region): Command list =
+      // props
       let style = 
         this.Props 
         |> Seq.choose ^function | BorderStyle style -> Some style | _ -> None
@@ -24,28 +25,29 @@ type internal Panel =
         |> Seq.tryHead
         |> Option.defaultValue Reset
 
+      // lines
       let line symbol = Border.styles.[style].[symbol].With color
 
       [ for x = region.X1 to region.X2 do
           yield! [ MoveTo (x, region.Y1)
-                   PrintWith <| line "─" 
+                   PrintWith <| line Horizontal 
                    MoveTo (x, region.Y2)
-                   PrintWith <| line "─"  ]
+                   PrintWith <| line Horizontal ]
 
         for y = region.Y1 to region.Y2 do  
           yield! [ MoveTo (region.X1, y)
-                   PrintWith <| line "│" 
+                   PrintWith <| line Vertical 
                    MoveTo (region.X2, y)
-                   PrintWith <| line "│" ]
+                   PrintWith <| line Vertical ]
 
         yield! [ MoveTo (region.X1, region.Y1)
-                 PrintWith <| line "┌" 
+                 PrintWith <| line TopLeft 
                  MoveTo (region.X1, region.Y2)
-                 PrintWith <| line "└" 
+                 PrintWith <| line BottomLeft 
                  MoveTo (region.X2, region.Y1)
-                 PrintWith <| line "┐" 
+                 PrintWith <| line TopRight 
                  MoveTo (region.X2, region.Y2)
-                 PrintWith <| line "┘"  ] ]
+                 PrintWith <| line BottomRight ] ]
 
 [<AutoOpen>]
 module Panel =
