@@ -26,7 +26,7 @@ type internal Panel =
         |> Option.defaultValue Reset
 
       // lines
-      let line symbol = Border.styles.[style].[symbol].With color
+      let line symbol = Border.Styles.[style].[symbol].With color
 
       [ for x = region.X1 to region.X2 do
           yield! [ MoveTo (x, region.Y1)

@@ -1,6 +1,6 @@
 # Thuja
 
-[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu/0.0.3)
+[![NuGet version](https://img.shields.io/nuget/v/Thuja.Tutu?style=flat-square&color=dark-green)](https://www.nuget.org/packages/Thuja.Tutu)
 
 <p align="center">
  <img width="200px" src="src/Thuja/icon.png" alt="icon"/>
@@ -53,11 +53,11 @@ Program.make selected view update
 
 ## Todo
 
+- write documentation;
 - make comprehensive user input handling:
-    - keyboard input (different keys, key kinds?, modifiers, etc);
+    - extend keyboard input;
     - mouse input?
-- decide if to use dispatch in view and self-sufficient reactive elements or process elements state through the model;
-- implement subscriptions mechanism;
+- implement configurable subscriptions;
 - add different control elements:
     - text input;
     - button;
@@ -65,6 +65,4 @@ Program.make selected view update
 - handle terminal resizing;
 - add tests;
 - add debug options;
-- write documentation;
-- consider using elmish as MVU framework?;
 - ...

@@ -74,8 +74,9 @@ type internal BorderLine =
   | BottomLeft
   | BottomRight
 
+[<RequireQualifiedAccess>]
 module internal Border =
-  let styles = Map [
+  let Styles = Map [
     Normal, Map [
       Horizontal,  "─"
       Vertical,    "│"

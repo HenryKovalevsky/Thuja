@@ -7,7 +7,6 @@
 
   <PropertyGroup>
     <PackageId>Thuja.Tutu</PackageId>
-    <Version>0.0.3</Version>
     <Authors>Henry Kovalevsky</Authors>
     <Description>Tutu backend for Thuja library.</Description>
     <PackageIcon>icon.png</PackageIcon>

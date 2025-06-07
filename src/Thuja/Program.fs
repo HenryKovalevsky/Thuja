@@ -37,6 +37,9 @@ module Program =
       KeyBindings = function | _ -> exit() // any key to exit
       Subscriptions = [] }
 
+  let makeStatic (view : Region -> ViewTree) =
+    make () (fun () -> view) (fun ()() -> (), Cmd.none)
+
   let withBackend<'backend, 'model, 'msg when 'backend : (new : unit -> 'backend) and 'backend :> IBackend> (program : Program<'model, 'msg>) =
     { program with Backend = fun _ -> new 'backend() }
 

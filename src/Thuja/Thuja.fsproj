@@ -7,7 +7,6 @@
 
   <PropertyGroup>
     <PackageId>Thuja</PackageId>
-    <Version>0.0.3</Version>
     <Authors>Henry Kovalevsky</Authors>
     <Description>Thuja is a minimalistic F# library to build terminal user interfaces.</Description>
     <PackageIcon>icon.png</PackageIcon>
@@ -28,12 +27,13 @@
     <Compile Include="Styles.fs" />
     <Compile Include="Elements\Helpers.fs" />
     <Compile Include="Elements\Empty.fs" />
+    <Compile Include="Elements\Layout.fs" />
     <Compile Include="Elements\Region.fs" />
     <Compile Include="Elements\Panel.fs" />
     <Compile Include="Elements\List.fs" />
     <Compile Include="Elements\Text.fs" />
     <Compile Include="Elements\Raw.fs" />
-    <Compile Include="Elements\Layout.fs" />
+    <Compile Include="Elements\Table.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
