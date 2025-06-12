@@ -30,8 +30,9 @@
     <Compile Include="Elements\Layout.fs" />
     <Compile Include="Elements\Region.fs" />
     <Compile Include="Elements\Panel.fs" />
-    <Compile Include="Elements\List.fs" />
+    <Compile Include="Elements\Rule.fs" />
     <Compile Include="Elements\Text.fs" />
+    <Compile Include="Elements\List.fs" />
     <Compile Include="Elements\Raw.fs" />
     <Compile Include="Elements\Table.fs" />
     <Compile Include="Program.fs" />

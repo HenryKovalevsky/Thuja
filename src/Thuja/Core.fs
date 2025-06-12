@@ -8,9 +8,13 @@ type Color =
   | Ansi of byte
   | Rgb of byte * byte * byte
 
+type Attribute =
+  | SGR of parameter: string
+
 type Style = 
   { Foreground: Color
-    Background: Color }
+    Background: Color
+    Attributes: Attribute list }
 
 // render
 type Command =

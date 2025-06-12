@@ -15,6 +15,7 @@ type Overflow =
 type TextProps =
   | Color of Color
   | Background of Color
+  | Attributes of Attribute list
   | Overflow of Overflow
 
 type internal Text =
@@ -27,14 +28,20 @@ type internal Text =
         this.Props 
         |> Seq.choose ^function | Color color -> Some color | _ -> None
         |> Seq.tryHead
-        |> Option.defaultValue Reset
+        |> Option.defaultValue Color.Reset
 
       let background = 
         this.Props 
         |> Seq.choose ^function | Background color -> Some color | _ -> None
         |> Seq.tryHead
-        |> Option.defaultValue Reset
+        |> Option.defaultValue Color.Reset
         
+      let attributes = 
+        this.Props 
+        |> Seq.choose ^function | Attributes attributes -> Some attributes | _ -> None
+        |> Seq.tryHead
+        |> Option.defaultValue []
+
       let overflow = 
         this.Props 
         |> Seq.choose ^function | Overflow overflow -> Some overflow | _ -> None
@@ -60,7 +67,7 @@ type internal Text =
 
       [ for index, line in lines do
           yield MoveTo (region.X1, region.Y1 + index)
-          yield PrintWith <| line.Styled(color, background) ]
+          yield PrintWith <| line.Styled(color, background, attributes) ]
 
 [<AutoOpen>]
 module Text = 

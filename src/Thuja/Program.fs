@@ -27,7 +27,7 @@ type Program<'model, 'msg> private =
 [<RequireQualifiedAccess>]
 module Program =
   let private exitEvent = new AutoResetEvent false
-  let exit() = ignore <| exitEvent.Set(); []
+  let exit() = ignore <| exitEvent.Set(); [] : Cmd<'msg>
 
   let make (model : 'model) (view : 'model -> Region -> ViewTree) (update : 'model -> 'msg -> 'model * Cmd<'msg>) =
     { Backend = fun _ -> failwith "Backend is not provided."

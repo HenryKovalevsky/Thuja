@@ -10,22 +10,31 @@ open Thuja
 type String with
   member this.With(color : Color) =
     { Foreground =  color
-      Background = Reset },
+      Background = Reset
+      Attributes = [] },
     this
 
   member this.On(color : Color) =
     { Foreground =  Reset
-      Background = color },
+      Background = color
+      Attributes = [] },
     this
 
   member this.Styled(foreground : Color, background : Color) =
     { Foreground =  foreground
-      Background = background },
+      Background = background
+      Attributes = [] },
+    this
+
+  member this.Styled(foreground : Color, background : Color, attributes : Attribute list) =
+    { Foreground =  foreground
+      Background = background
+      Attributes = attributes },
     this
 
 module Color = 
   // default
-  let Reset = Reset
+  let Reset = Color.Reset
 
   // standard ansi set
   let Black =       Ansi 0uy
@@ -58,6 +67,14 @@ module Color =
     let b = Byte.Parse(hex.Substring(5, 2), NumberStyles.AllowHexSpecifier)
 
     Rgb r g b
+
+module Attribute =
+  // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
+  let Reset =      SGR "0"
+  let Bold =       SGR "1"
+  let Dim =        SGR "2"
+  let Italic =     SGR "3"
+  let Underlined = SGR "4"
 
 // borders
 type BorderStyle =

@@ -19,13 +19,13 @@ module Table =
       props 
       |> Seq.choose ^function | HeadersStyle (fg, bg) -> Some (fg, bg) | _ -> None
       |> Seq.tryHead
-      |> Option.defaultValue (Color.White, Reset)
+      |> Option.defaultValue (Color.White, Color.Reset)
 
     let rowsFg, rowsBg = 
       props 
       |> Seq.choose ^function | RowsStyle (fg, bg) -> Some (fg, bg) | _ -> None
       |> Seq.tryHead
-      |> Option.defaultValue (Color.DarkGrey, Reset)
+      |> Option.defaultValue (Color.DarkGrey, Color.Reset)
       
     let columnsProps = 
       props 

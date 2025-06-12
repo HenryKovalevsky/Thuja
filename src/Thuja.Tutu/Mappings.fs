@@ -16,10 +16,16 @@ type Mapper =
     | Rgb (r, g, b) -> Color.Rgb(r, g, b)
 
   static member map(style : Thuja.Style, content : string) : StyledContent<string> =
-    StyledContent(ContentStyled.Default
-        .With(Mapper.map style.Foreground)
-        .On(Mapper.map style.Background), content)
-      
+    let styledContent =
+      Seq.fold 
+        (fun (sc : StyledContent<_>) (SGR value) -> sc.Attribute(Attribute(value, value)))
+        (StyledContent (ContentStyled.Default, content))
+        style.Attributes
+        
+    styledContent
+      .With(Mapper.map style.Foreground)
+      .On(Mapper.map style.Background)
+
   static member map(keyCode : KeyCode.IKeyCode) : KeyInput option =
     match keyCode with 
     | :? KeyCode.CharKeyCode as code -> Char code.Character.[0] |> Some 
