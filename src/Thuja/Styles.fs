@@ -68,6 +68,7 @@ module Color =
 
     Rgb r g b
 
+// attributes
 module Attribute =
   // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
   let Reset =      SGR "0"
@@ -75,6 +76,24 @@ module Attribute =
   let Dim =        SGR "2"
   let Italic =     SGR "3"
   let Underlined = SGR "4"
+  let SlowBlink =  SGR "5" 
+  let RapidBlink = SGR "6"
+  let Invert =     SGR "7"
+  let Conceal =    SGR "8"
+  let Strike =     SGR "9"
+  let SGR param =  SGR param
+
+// alignment
+type Align =
+  | Top
+  | Bottom
+  | Right
+  | Left
+  | Center
+  | TopRight
+  | TopLeft
+  | BottomRight
+  | BottomLeft
 
 // borders
 type BorderStyle =
@@ -83,16 +102,16 @@ type BorderStyle =
   | Thick
   | Double
 
-type internal BorderLine =
-  | Horizontal
-  | Vertical
-  | TopLeft
-  | TopRight
-  | BottomLeft
-  | BottomRight
-
 [<RequireQualifiedAccess>]
 module internal Border =
+  type Line =
+    | Horizontal
+    | Vertical
+    | TopLeft
+    | TopRight
+    | BottomLeft
+    | BottomRight
+
   let Styles = Map [
     Normal, Map [
       Horizontal,  "─"

@@ -4,6 +4,8 @@ open Thuja
 open Thuja.View
 open Thuja.Styles
 
+open type Border.Line
+
 type PanelProps =
   | BorderStyle of BorderStyle
   | BorderColor of Color

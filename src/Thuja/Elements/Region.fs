@@ -1,17 +1,7 @@
 namespace Thuja.Elements
 
 open Thuja.View
-
-type Align =
-  | Top
-  | Bottom
-  | Right
-  | Left
-  | Center
-  | TopRight
-  | TopLeft
-  | BottomRight
-  | BottomLeft
+open Thuja.Styles
 
 type Margin =
   | Top of size: int
@@ -70,7 +60,7 @@ module Region =
       | Align.Left -> region.X1, region.Y1 + (region.Height - height) / 2 - 1
       | Align.Top -> region.X1 + (region.Width - width) / 2 - 1, region.Y1
       | Align.Bottom -> region.X1 + (region.Width - width) / 2 - 1, region.Y2 - height + 1
-      | Align.Right -> region.X1 + (region.Width - width) / 2 - 1, region.Y1 + (region.Height - height) / 2 - 1
+      | Align.Right -> region.X2 - width + 1, region.Y1 + (region.Height - height) / 2 - 1
 
       | TopLeft -> region.X1, region.Y1
       | TopRight -> region.X2 - width + 1, region.Y1

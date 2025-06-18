@@ -19,7 +19,7 @@ let view selected =
       ] selected
     ]
     panel [] [
-      text [] "Use '↑' and '↓' keys to navigate through the list items, 'Ctrl+C' for exit."
+      text [ Overflow Wrap ] "Use '↑' and '↓' keys to navigate through the list items, 'Ctrl+C' for exit."
     ]
   ]
 
@@ -27,6 +27,7 @@ let view selected =
 let update selected event  =
   let length = 2
   match event with
+  | Char 'q', _
   | Char 'c', KeyModifiers.Ctrl -> selected, Program.exit()
   | Down, _ -> Math.Min(length, selected + 1), Cmd.none
   | Up, _ -> Math.Max(0, selected - 1), Cmd.none

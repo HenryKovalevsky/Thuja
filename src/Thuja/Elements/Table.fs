@@ -1,7 +1,5 @@
 namespace Thuja.Elements
 
-open System
-
 open Thuja
 open Thuja.Elements
 open Thuja.Styles

@@ -17,6 +17,7 @@ type TextProps =
   | Background of Color
   | Attributes of Attribute list
   | Overflow of Overflow
+  | TextAlign of Align
 
 type internal Text =
   { Props: TextProps list
@@ -48,24 +49,61 @@ type internal Text =
         |> Seq.tryHead
         |> Option.defaultValue Clip
 
+      let align = 
+        this.Props 
+        |> Seq.choose ^function | TextAlign align -> Some align | _ -> None
+        |> Seq.tryHead
+        |> Option.defaultValue Align.TopLeft
+
       // content
       let lines = 
-        this.Content.Split Environment.NewLine
+        if overflow = Wrap then
+          this.Content.Wrap region.Width
+        else
+          this.Content.Split Environment.NewLine
+
+      let lines = 
+        lines
         |> Seq.map ^fun line ->
-            match overflow with
-            | Ellipsis -> [ line.TruncateWithEllipsis region.Width ]
-            | Clip -> [ line.Truncate region.Width ]
-            | Wrap -> // todo: implement smart words wrapping
-                line.ToCharArray()
-                |> Seq.chunkBySize region.Width
-                |> Seq.map String
-                |> Seq.map ^fun line -> line.Truncate region.Width
-                |> Seq.toList
-        |> Seq.collect id
-        |> Seq.indexed
+            match align with // horizontal alignment
+            | Left | TopLeft | BottomLeft -> 
+                String.truncate (overflow = Ellipsis) region.Width line
+
+            | Center | Top | Bottom -> 
+                let margin = Math.Max((region.Width - line.Length) / 2 - 1, 0)
+                let gap = String.replicate margin " "
+                let line = gap + line
+
+                String.truncate (overflow = Ellipsis) region.Width line
+            
+            | Right | TopRight | BottomRight -> 
+                let margin = Math.Max(region.Width - line.Length + 1, 0)
+                let gap = String.replicate margin " "
+                let line = gap + line
+                
+                line
+                |> String.rev
+                |> String.truncate (overflow = Ellipsis) region.Width
+                |> String.rev
+                
         |> Seq.truncate region.Height
 
-      [ for index, line in lines do
+      let lines =
+        match align with // verticals alignment
+        | TopLeft | Top| TopRight -> 
+            lines
+
+        | Left | Center | Right -> 
+            let margin = Math.Max((region.Height - Seq.length lines) / 2, 0)
+            let gap = Seq.init margin ^fun _ -> String.Empty.Truncate region.Width
+            Seq.concat [ gap; lines ]
+
+        | BottomLeft | Bottom | BottomRight ->
+            let margin = Math.Max(region.Height - Seq.length lines, 0)
+            let gap = Seq.init margin ^fun _ -> String.Empty.Truncate region.Width
+            Seq.concat [ gap; lines ]
+
+      [ for index, line in Seq.indexed lines do
           yield MoveTo (region.X1, region.Y1 + index)
           yield PrintWith <| line.Styled(color, background, attributes) ]
 
