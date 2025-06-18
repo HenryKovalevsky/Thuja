@@ -51,16 +51,21 @@ Program.make selected view update
 |> Program.run
 ```
 
-## Todo
+## Documentation
 
-- write documentation;
+See the [Wiki](https://github.com/HenryKovalevsky/Thuja/wiki) for full documentation, details and other information.
+
+## Todo (future features list)
+
+- improve documentation;
 - make comprehensive user input handling:
     - extend keyboard input;
     - mouse input?
 - implement configurable subscriptions;
 - add different control elements:
-    - text input;
-    - button;
+    - markup;
+    - text input?;
+    - buttons?;
     - ...
 - handle terminal resizing;
 - add tests;
