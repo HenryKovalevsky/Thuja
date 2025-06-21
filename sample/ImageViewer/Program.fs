@@ -5,7 +5,6 @@ open CliWrap.Buffered
 
 open Thuja
 open Thuja.Tutu
-open Thuja.Backend
 open Thuja.Elements
 
 // https://hpjansson.org/chafa/

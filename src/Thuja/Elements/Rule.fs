@@ -37,14 +37,10 @@ type internal Rule =
       | Horizontal ->
         [ for x = region.X1 to region.X2 do
             yield! [ MoveTo (x, region.Y1)
-                     PrintWith <| line Border.Line.Horizontal 
-                     MoveTo (x, region.Y2)
                      PrintWith <| line Border.Line.Horizontal ] ]
       | Vertical ->
         [ for y = region.Y1 to region.Y2 do  
             yield! [ MoveTo (region.X1, y)
-                     PrintWith <| line Border.Line.Vertical 
-                     MoveTo (region.X2, y)
                      PrintWith <| line Border.Line.Vertical ] ]
 
 [<AutoOpen>]
