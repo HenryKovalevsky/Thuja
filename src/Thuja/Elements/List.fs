@@ -27,7 +27,7 @@ type internal List =
             match Seq.tryItem index items with
             | Some item ->
                 if this.Index = page * region.Height + index
-                then PrintWith <| item.On Color.DarkGrey
+                then PrintWith <| item.With [Attribute.Invert]
                 else Print <| item 
             | None ->
                 Print <| String.Empty.Truncate region.Width ] // clear 

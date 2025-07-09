@@ -51,6 +51,8 @@ Program.make selected view update
 |> Program.run
 ```
 
+![example](./sample/SimpleMenu/example.gif "example") 
+
 ## Documentation
 
 See the [Wiki](https://github.com/HenryKovalevsky/Thuja/wiki) for full documentation, details and other information.

@@ -9,25 +9,31 @@ open Thuja
 // colors
 type String with
   member this.With(color : Color) =
-    { Foreground =  color
+    { Foreground = color
       Background = Reset
       Attributes = [] },
     this
 
+  member this.With(attributes : Attribute list) =
+    { Foreground = Reset
+      Background = Reset
+      Attributes = attributes },
+    this
+
   member this.On(color : Color) =
-    { Foreground =  Reset
+    { Foreground = Reset
       Background = color
       Attributes = [] },
     this
 
   member this.Styled(foreground : Color, background : Color) =
-    { Foreground =  foreground
+    { Foreground = foreground
       Background = background
       Attributes = [] },
     this
 
   member this.Styled(foreground : Color, background : Color, attributes : Attribute list) =
-    { Foreground =  foreground
+    { Foreground = foreground
       Background = background
       Attributes = attributes },
     this
